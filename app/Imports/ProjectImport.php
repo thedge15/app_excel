@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Factory\ProjectDynamicFactory;
+use App\Factory\ProjectFactory;
 use App\Models\FailedRow;
 use App\Models\Project;
 use App\Models\Task;
@@ -38,7 +39,7 @@ class ProjectImport implements ToCollection, WithHeadingRow, WithValidation, Ski
         foreach ($collection as $row) {
             if (!isset($row['naimenovanie'])) continue;
 
-            $projectFactory = ProjectDynamicFactory::make($typesMap, $row);
+            $projectFactory = ProjectFactory::make($typesMap, $row);
 
             Project::updateOrCreate(
                 [
@@ -67,7 +68,7 @@ class ProjectImport implements ToCollection, WithHeadingRow, WithValidation, Ski
         return [
             'tip' => 'required|string',
             'naimenovanie' => 'required|string',
-            'data_sozdaniia' => 'required|string',
+            'data_sozdaniia' => 'required|integer',
             'podpisanie_dogovora' => 'required|integer',
             'dedlain' => 'nullable|integer',
             'setevik' => 'nullable|string',
